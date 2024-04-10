@@ -1,0 +1,857 @@
+<html dir='ltr' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='https://www.google.com/2005/gml/b' xmlns:data='https://www.google.com/2005/gml/data' xmlns:expr='https://www.google.com/2005/gml/expr'>
+<head>
+<link type='text/css' rel='stylesheet' href='https://www.blogger.com/static/v1/widgets/454518911-widget_css_bundle.css' />
+<link type='text/css' rel='stylesheet' href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=7476044205644946903&amp;zx=36ff0d10-9d6d-4d97-8a63-844f88d88e1a' />
+<style type='text/css'>
+body {background: #000 !important;}
+#header-wrapper, #content-wrapper, #footer-wrapper, #fechadeldia {display:none;}</style>
+<script type='text/javascript'>
+// Fuegos artificiales
+//<![CDATA[
+var bits=200; // Número de puntos
+var intensity=10; // Intensidad de la explosión (recomendado entre 3 y 10)
+var speed=0.5; // Velocidad (a menor numero, mas rapido)
+var colours=new Array("#03f", "#f03", "#0e0", "#93f", "#0cc", "#f93");
+//Colores de los fuegos
+
+var dx, xpos, ypos, bangheight;
+var Xpos=new Array();
+var Ypos=new Array();
+var dX=new Array();
+var dY=new Array();
+var decay=new Array();
+var colour=0;
+var swide=800;
+var shigh=600;
+function write_fire() {
+var b, s;
+b=document.createElement("div");
+s=b.style;
+s.position="absolute";
+b.setAttribute("id", "bod");
+document.body.appendChild(b);
+set_scroll();
+set_width();
+b.appendChild(div("lg", 3, 4));
+b.appendChild(div("tg", 2, 3));
+for (var i=0; i<bits; i++) b.appendChild(div("bg"+i, 1, 1));
+}
+function div(id, w, h) {
+var d=document.createElement("div");
+d.style.position="absolute";
+d.style.overflow="hidden";
+d.style.width=w+"px";
+d.style.height=h+"px";
+d.setAttribute("id", id);
+return (d);
+}
+function bang() {
+var i, X, Y, Z, A=0;
+for (i=0; i<bits; i++) {
+X=Math.round(Xpos[i]);
+Y=Math.round(Ypos[i]);
+Z=document.getElementById("bg"+i).style;
+if((X>=0)&&(X<swide)&&(Y>=0)&&(Y<shigh)) {
+Z.left=X+"px";
+Z.top=Y+"px";
+}
+if ((decay[i]-=1)>14) {
+Z.width="3px";
+Z.height="3px";
+}
+else if (decay[i]>7) {
+Z.width="2px";
+Z.height="2px";
+}
+else if (decay[i]>3) {
+Z.width="1px";
+Z.height="1px";
+}
+else if (++A) Z.visibility="hidden";
+Xpos[i]+=dX[i];
+Ypos[i]+=(dY[i]+=1.25/intensity);
+}
+if (A!=bits) setTimeout("bang()", speed);
+}
+
+function stepthrough() {
+var i, Z;
+var oldx=xpos;
+var oldy=ypos;
+xpos+=dx;
+ypos-=4;
+if (ypos<bangheight||xpos<0||xpos>=swide||ypos>=shigh) {
+for (i=0; i<bits; i++) {
+Xpos[i]=xpos;
+Ypos[i]=ypos;
+dY[i]=(Math.random()-0.5)*intensity;
+dX[i]=(Math.random()-0.5)*(intensity-Math.abs(dY[i]))*1.25;
+decay[i]=Math.floor((Math.random()*16)+16);
+Z=document.getElementById("bg"+i).style;
+Z.backgroundColor=colours[colour];
+Z.visibility="visible";
+}
+bang();
+launch();
+}
+document.getElementById("lg").style.left=xpos+"px";
+document.getElementById("lg").style.top=ypos+"px";
+document.getElementById("tg").style.left=oldx+"px";
+document.getElementById("tg").style.top=oldy+"px";
+}
+function launch() {
+colour=Math.floor(Math.random()*colours.length);
+xpos=Math.round((0.5+Math.random())*swide*0.5);
+ypos=shigh-5;
+dx=(Math.random()-0.5)*4;
+bangheight=Math.round((0.5+Math.random())*shigh*0.4);
+document.getElementById("lg").style.backgroundColor=colours[colour];
+document.getElementById("tg").style.backgroundColor=colours[colour];
+}
+window.onscroll=set_scroll;
+function set_scroll() {
+var sleft, sdown;
+if (typeof(self.pageYOffset)=="number") {
+sdown=self.pageYOffset;
+sleft=self.pageXOffset;
+}
+else if (document.body.scrollTop || document.body.scrollLeft) {
+sdown=document.body.scrollTop;
+sleft=document.body.scrollLeft;
+}
+else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+sleft=document.documentElement.scrollLeft;
+sdown=document.documentElement.scrollTop;
+}
+else {
+sdown=0;
+sleft=0;
+}
+var s=document.getElementById("bod").style;
+s.top=sdown+"px";
+s.left=sleft+"px";
+}
+
+window.onresize=set_width;
+function set_width() {
+if (typeof(self.innerWidth)=="number") {
+swide=self.innerWidth;
+shigh=self.innerHeight;
+}
+else if (document.documentElement && document.documentElement.clientWidth) {
+swide=document.documentElement.clientWidth;
+shigh=document.documentElement.clientHeight;
+}
+else if (document.body.clientWidth) {
+swide=document.body.clientWidth;
+shigh=document.body.clientHeight;
+}
+}
+
+window.onload=function() { if (document.getElementById) {
+set_width();
+write_fire();
+launch();
+setInterval('stepthrough()', speed);
+}}
+//]]>
+</script>
+<script src='https://code.jquery.com/jquery-1.4.2.min.js' type='text/javascript'></script>
+<script src='https://ciudadblogger.googlecode.com/files/jquery.easydrag.js' type='text/javascript'></script>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<meta content='blogger' name='generator'/>
+<link href='http://ciudadblogger3.blogspot.pe/favicon.ico' rel='icon' type='image/x-icon'/>
+<link href='https://ciudadblogger3.blogspot.com/2010/12/fuegos-artificiales.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="Blog de pruebas - Atom" href="https://ciudadblogger3.blogspot.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="Blog de pruebas - RSS" href="https://ciudadblogger3.blogspot.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="Blog de pruebas - Atom" href="https://www.blogger.com/feeds/7476044205644946903/posts/default" />
+
+<link rel="alternate" type="application/atom+xml" title="Blog de pruebas - Atom" href="https://ciudadblogger3.blogspot.com/feeds/2787072642101004316/comments/default" />
+<meta content='https://ciudadblogger3.blogspot.com/2010/12/fuegos-artificiales.html' property='og:url'/>
+<meta content='Fuegos artificiales' property='og:title'/>
+<meta content='' property='og:description'/>
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } try { document.execCommand('BackgroundImageCache', false, true); } catch(e) {} })(); </script> <![endif]-->
+<title>Blog de pruebas: Fuegos artificiales</title>
+<style id='page-skin-1' type='text/css'><!--
+
+#navbar-iframe {
+display: none !important;
+}
+body {
+background:#dddd99;
+margin:0;
+color:#333333;
+font:x-small Georgia Serif;
+font-size/* */:/**/small;
+font-size: /**/small;
+text-align: center;
+}
+a:link {
+color:#668844;
+text-decoration:none;
+}
+a:visited {
+color:#999966;
+text-decoration:none;
+}
+a:hover {
+color:#cc8800;
+text-decoration:underline;
+}
+a img {
+border-width:0;
+}
+/* Header
+-----------------------------------------------
+*/
+#header-wrapper {
+width:660px;
+margin:0 auto 10px;
+border:1px solid #ffffcc;
+}
+#header-inner {
+background-position: center;
+margin-left: auto;
+margin-right: auto;
+}
+#header {
+margin: 5px;
+border: 1px solid #ffffcc;
+text-align: center;
+color:#887744;
+}
+#header h1 {
+margin:5px 5px 0;
+padding:15px 20px .25em;
+line-height:1.2em;
+text-transform:uppercase;
+letter-spacing:.2em;
+font: normal normal 200% Georgia, Serif;
+}
+#header a {
+color:#887744;
+text-decoration:none;
+}
+#header a:hover {
+color:#887744;
+}
+#header .description {
+margin:0 5px 5px;
+padding:0 20px 15px;
+max-width:700px;
+text-transform:uppercase;
+letter-spacing:.2em;
+line-height: 1.4em;
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+color: #aa8833;
+}
+#header img {
+margin-left: auto;
+margin-right: auto;
+}
+/* Outer-Wrapper
+----------------------------------------------- */
+#outer-wrapper {
+width: 660px;
+margin:0 auto;
+padding:10px;
+text-align:left;
+font: normal normal 100% Georgia, Serif;
+}
+#main-wrapper {
+width: 410px;
+float: left;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+#sidebar-wrapper {
+width: 220px;
+float: right;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+margin:1.5em 0 .75em;
+font:normal normal 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,Sans-serif;
+line-height: 1.4em;
+text-transform:uppercase;
+letter-spacing:.2em;
+color:#777744;
+}
+/* Posts
+-----------------------------------------------
+*/
+h2.date-header {
+margin:1.5em 0 .5em;
+}
+.post {
+margin:.5em 0 1.5em;
+border-bottom:1px dotted #ffffcc;
+padding-bottom:1.5em;
+}
+.post h3 {
+margin:.25em 0 0;
+padding:0 0 4px;
+font-size:140%;
+font-weight:normal;
+line-height:1.4em;
+color:#cc8800;
+}
+.post h3 a, .post h3 a:visited, .post h3 strong {
+display:block;
+text-decoration:none;
+color:#cc8800;
+font-weight:normal;
+}
+.post h3 strong, .post h3 a:hover {
+color:#333333;
+}
+.post-body {
+margin:0 0 .75em;
+line-height:1.6em;
+}
+.post-body blockquote {
+line-height:1.3em;
+}
+.post-footer {
+margin: .75em 0;
+color:#777744;
+text-transform:uppercase;
+letter-spacing:.1em;
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+line-height: 1.4em;
+}
+.comment-link {
+margin-left:.6em;
+}
+.post img, table.tr-caption-container {
+padding:4px;
+border:1px solid #ffffcc;
+}
+.tr-caption-container img {
+border: none;
+padding: 0;
+}
+.post blockquote {
+margin:1em 20px;
+}
+.post blockquote p {
+margin:.75em 0;
+}
+/* Comments
+----------------------------------------------- */
+#comments h4 {
+margin:1em 0;
+font-weight: bold;
+line-height: 1.4em;
+text-transform:uppercase;
+letter-spacing:.2em;
+color: #777744;
+}
+#comments-block {
+margin:1em 0 1.5em;
+line-height:1.6em;
+}
+#comments-block .comment-author {
+margin:.5em 0;
+}
+#comments-block .comment-body {
+margin:.25em 0 0;
+}
+#comments-block .comment-footer {
+margin:-.25em 0 2em;
+line-height: 1.4em;
+text-transform:uppercase;
+letter-spacing:.1em;
+}
+#comments-block .comment-body p {
+margin:0 0 .75em;
+}
+.deleted-comment {
+font-style:italic;
+color:gray;
+}
+.feed-links {
+clear: both;
+line-height: 2.5em;
+}
+#blog-pager-newer-link {
+float: left;
+display:none;
+}
+#blog-pager-older-link {
+float: right;
+display:none;}
+#blog-pager {
+text-align: center;
+display:none;
+clear:both;}
+/* Sidebar Content
+----------------------------------------------- */
+.sidebar {
+color: #333333;
+line-height: 1.5em;
+}
+.sidebar ul {
+list-style:none;
+margin:0 0 0;
+padding:0 0 0;
+}
+.sidebar li {
+margin:0;
+padding-top:0;
+padding-right:0;
+padding-bottom:.25em;
+padding-left:15px;
+text-indent:-15px;
+line-height:1.5em;
+}
+.sidebar .widget, .main .widget {
+border-bottom:1px dotted #ffffcc;
+margin:0 0 1.5em;
+padding:0 0 1.5em;
+}
+.main .Blog {
+border-bottom-width: 0;
+}
+/* Profile
+----------------------------------------------- */
+.profile-img {
+float: left;
+margin-top: 0;
+margin-right: 5px;
+margin-bottom: 5px;
+margin-left: 0;
+padding: 4px;
+border: 1px solid #ffffcc;
+}
+.profile-data {
+margin:0;
+text-transform:uppercase;
+letter-spacing:.1em;
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+color: #777744;
+font-weight: bold;
+line-height: 1.6em;
+}
+.profile-datablock {
+margin:.5em 0 .5em;
+}
+.profile-textblock {
+margin: 0.5em 0;
+line-height: 1.6em;
+}
+.profile-link {
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+text-transform: uppercase;
+letter-spacing: .1em;
+}
+/* Footer
+----------------------------------------------- */
+#footer {
+width:660px;
+clear:both;
+margin:0 auto;
+padding-top:15px;
+line-height: 1.6em;
+text-transform:uppercase;
+letter-spacing:.1em;
+text-align: center;
+}
+/* Menú de páginas
+----------------------------------------------- */
+#PageList1 {
+width: 100%;
+border: 1px solid #625e00;
+background-color: #F2F5A9;
+}
+#PageList1 ul li a {
+color: black;
+text-decoration: none;
+font-weight: bold;
+padding-right: 20px;
+background: transparent url(https://2.bp.blogspot.com/_dsEG33PDaHw/S3GaMp5QZEI/AAAAAAAAAIg/sQHkDct7T44/s320/vertical.gif) center right no-repeat;
+}
+#PageList1 ul li a:hover {
+color: grey;
+position: relative;
+left: 1px;
+top: 1px;
+}
+.fechadeldia p {
+background: #F2F5A9;
+width: 99%;
+margin: 0;
+padding: 1px 0 1px 10px;
+color: #424242;
+font-weight: bold;
+font-style: italic;
+font-size: 12px;
+}
+
+--></style>
+</head>
+<body>
+<div class='navbar section' id='navbar'><div class='widget Navbar' data-version='1' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<div id="navbar-iframe-container"></div>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          gapi.iframes.getContext().openChild({
+              url: 'https://www.blogger.com/navbar.g?targetBlogID\x3d7476044205644946903\x26blogName\x3dBlog+de+pruebas\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dSILVER\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttps://ciudadblogger3.blogspot.com/search\x26blogLocale\x3des\x26v\x3d2\x26homepageUrl\x3dhttps://ciudadblogger3.blogspot.com/\x26targetPostID\x3d2787072642101004316\x26blogPostOrPageUrl\x3dhttps://ciudadblogger3.blogspot.com/2010/12/fuegos-artificiales.html\x26vt\x3d575149800519199548',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
+          });
+        }
+      });
+    </script><script type="text/javascript">
+(function() {
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
+if (head) {
+head.appendChild(script);
+}})();
+</script>
+</div></div>
+<div id='outer-wrapper'><div id='wrap2'>
+<!-- skip links for text browsers -->
+<span id='skiplinks' style='display:none;'>
+<a href='#main'>skip to main </a> |
+      <a href='#sidebar'>skip to sidebar</a>
+</span>
+<div class='fechadeldia' id='fechadeldia'>
+<p>
+<script type='text/javascript'> 
+var mydate=new Date()
+var year=mydate.getYear()
+if (year < 1000)
+year+=1900
+var day=mydate.getDay()
+var month=mydate.getMonth()
+var daym=mydate.getDate()
+if (daym<10)
+daym="0"+daym
+var dayarray=new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado")
+var montharray=new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre")
+document.write("<p>"+dayarray[day]+", "+montharray[month]+" "+daym+", "+year+"</p>")
+</script>
+</p>
+</div>
+<div id='header-wrapper'>
+<div class='header section' id='header'><div class='widget Header' data-version='1' id='Header1'>
+<div id='header-inner'>
+<div class='titlewrapper'>
+<h1 class='title'>
+<a href='http://ciudadblogger3.blogspot.pe/'>Blog de pruebas</a>
+</h1>
+</div>
+<div class='descriptionwrapper'>
+<p class='description'><span><script language='Javascript'>
+//<![CDATA[
+<!--
+
+function text() {
+};
+text = new text();
+number = 0;
+// textArray
+text[number++] = "Las mujeres han sido hechas para ser amadas, no para ser comprendidas."
+text[number++] = "No hay que morir por el otro, sino vivir para disfrutar juntos."
+text[number++] = "La enfermedad del ignorante es ignorar su propia ignorancia."
+text[number++] = "Los viejos desconfían de la juventud porque han sido jóvenes."
+
+increment = Math.floor(Math.random() * number);
+document.write(text[increment]);
+//-->
+//]]>
+</script></span></p>
+</div>
+</div>
+</div></div>
+</div>
+<div id='content-wrapper'>
+<div id='crosscol-wrapper' style='text-align:center'>
+<div class='crosscol section' id='crosscol'><div class='widget PageList' data-version='1' id='PageList1'>
+<h2>Páginas</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://ciudadblogger3.blogspot.pe/'>Página principal</a></li>
+<li><a href='http://ciudadblogger3.blogspot.pe/p/pagina-dos.html'>Página UNO</a></li>
+<li><a href='http://ciudadblogger3.blogspot.pe/p/pagina-uno.html'>Página DOS</a></li>
+<li><a href='http://ciudadblogger3.blogspot.pe/p/pagina-tres.html'>EasyDrag</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=7476044205644946903&widgetType=PageList&widgetId=PageList1&action=editWidget&sectionId=crosscol' onclick='return _WidgetManager._PopupConfig(document.getElementById("PageList1"));' target='configPageList1' title='Editar'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div></div>
+</div>
+<div id='main-wrapper'>
+<div class='main section' id='main'><div class='widget Blog' data-version='1' id='Blog1'>
+<script src=''></script>
+<div class='blog-posts hfeed'>
+
+        <div class="date-outer">
+      
+<h2 class='date-header'><span>miércoles, 29 de diciembre de 2010</span></h2>
+
+        <div class="date-posts">
+      
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template' itemprop='blogPost' itemscope='itemscope' itemtype='http://schema.org/BlogPosting'>
+<meta content='7476044205644946903' itemprop='blogId'/>
+<meta content='2787072642101004316' itemprop='postId'/>
+<a name='2787072642101004316'></a>
+<h3 class='post-title entry-title' itemprop='name'>
+Fuegos artificiales
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content' id='post-body-2787072642101004316' itemprop='description articleBody'>
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Publicado por
+<span class='fn' itemprop='author' itemscope='itemscope' itemtype='http://schema.org/Person'>
+<span itemprop='name'>Ciudad Blogger</span>
+</span>
+</span>
+<span class='post-timestamp'>
+en
+<meta content='https://ciudadblogger3.blogspot.com/2010/12/fuegos-artificiales.html' itemprop='url'/>
+<a class='timestamp-link' href='http://ciudadblogger3.blogspot.pe/2010/12/fuegos-artificiales.html' rel='bookmark' title='permanent link'><abbr class='published' itemprop='datePublished' title='2010-12-29T11:15:00-08:00'>11:15</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='post-comment-link'>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+</span>
+<div class='post-share-buttons goog-inline-block'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+Etiquetas:
+<a href='http://ciudadblogger3.blogspot.pe/search/label/hidden' rel='tag'>hidden</a>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>No hay comentarios:</h4>
+<div id='Blog1_comments-block-wrapper'>
+<dl class='avatar-comment-indent' id='comments-block'>
+</dl>
+</div>
+<p class='comment-footer'>
+<div class='comment-form'>
+<a name='comment-form'></a>
+<h4 id='comment-post-message'>Publicar un comentario en la entrada</h4>
+<p>
+</p>
+<a href='https://www.blogger.com/comment-iframe.g?blogID=7476044205644946903&postID=2787072642101004316' id='comment-editor-src'></a>
+<iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' frameborder='0' height='410px' id='comment-editor' name='comment-editor' src='' width='100%'></iframe>
+<script type="text/javascript" src="https://www.blogger.com/static/v1/jsbin/3629047462-comment_from_post_iframe.js"></script>
+<script type='text/javascript'>
+      BLOG_CMT_createIframe('https://www.blogger.com/rpc_relay.html');
+    </script>
+</div>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+</div>
+
+      </div></div>
+    
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='blog-pager-newer-link' href='http://ciudadblogger3.blogspot.pe/2010/12/fuegos-artificiales-flash.html' id='Blog1_blog-pager-newer-link' title='Entrada más reciente'>Entrada más reciente</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='blog-pager-older-link' href='http://ciudadblogger3.blogspot.pe/2010/12/trineo-de-santa-claus.html' id='Blog1_blog-pager-older-link' title='Entrada antigua'>Entrada antigua</a>
+</span>
+<a class='home-link' href='http://ciudadblogger3.blogspot.pe/'>Página principal</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+<a class='feed-link' href='https://ciudadblogger3.blogspot.com/feeds/2787072642101004316/comments/default' target='_blank' type='application/atom+xml'></a>
+</div>
+</div>
+</div></div>
+</div>
+<div style='clear:right;'></div>
+<div id='sidebar-wrapper'>
+<div class='sidebar section' id='sidebar'><div class='widget BlogArchive' data-version='1' id='BlogArchive1'>
+<h2>Archivo del blog</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+
+        &#9660;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://ciudadblogger3.blogspot.pe/search?updated-min=2010-01-01T00:00:00-08:00&amp;updated-max=2011-01-01T00:00:00-08:00&amp;max-results=7'>
+2010
+</a>
+<span class='post-count' dir='ltr'>(7)</span>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+
+        &#9660;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://ciudadblogger3.blogspot.pe/2010_12_01_archive.html'>
+diciembre
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+<ul class='posts'>
+<li><a href='http://ciudadblogger3.blogspot.pe/2010/12/fuegos-artificiales-flash.html'>Fuegos artificiales (flash)</a></li>
+<li><a href='http://ciudadblogger3.blogspot.pe/2010/12/fuegos-artificiales.html'>Fuegos artificiales</a></li>
+<li><a href='http://ciudadblogger3.blogspot.pe/2010/12/trineo-de-santa-claus.html'>Trineo de Santa Claus</a></li>
+<li><a href='http://ciudadblogger3.blogspot.pe/2010/12/luces-de-navidad.html'>Luces de Navidad</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://ciudadblogger3.blogspot.pe/2010_11_01_archive.html'>
+noviembre
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://ciudadblogger3.blogspot.pe/2010_02_01_archive.html'>
+febrero
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=7476044205644946903&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Editar'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget HTML' data-version='1' id='HTML2'>
+<div class='widget-content'>
+<a href="http://ciudadblogger.com" target="blank"><img title="Trucos para Blogger" alt="Ciudad Blogger" src="https://1.bp.blogspot.com/_qgZA1ny_dAs/S2h2Bm24cJI/AAAAAAAADt8/p7XlDhnJing/s400/banner-colored125x125.PNG" /></a>
+<a href="http://respondones.com" target="blank"><img alt="Respondones" src="http://dl.getdropbox.com/u/647003/Respondones/Banners/banner125x125.PNG" /></a>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=7476044205644946903&widgetType=HTML&widgetId=HTML2&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML2"));' target='configHTML2' title='Editar'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div></div>
+</div>
+<!-- spacer for skins that want sidebar and main to be the same height-->
+<div class='clear'>&#160;</div>
+</div>
+<!-- end content-wrapper -->
+<div id='footer-wrapper'>
+<div class='footer section' id='footer'><div class='widget HTML' data-version='1' id='HTML1'>
+<div class='widget-content'>
+<center><a href="http://ciudadblogger.com/"><img alt="Ciudad Blogger" src="https://2.bp.blogspot.com/_qgZA1ny_dAs/S2h08FJb0mI/AAAAAAAADtk/hHhHHBPpvBg/s320/mini-boton.png" title="Ciudad Blogger" /></a></center>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=7476044205644946903&widgetType=HTML&widgetId=HTML1&action=editWidget&sectionId=footer' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target='configHTML1' title='Editar'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div></div>
+</div>
+</div></div>
+<!-- end outer-wrapper -->
+<div class='luces'></div>
+
+<script type="text/javascript" src="https://www.blogger.com/static/v1/widgets/803954089-widgets.js"></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type='text/javascript'>
+window['__wavt'] = 'AOuZoY7yFBt17eS5qDvFvQ4HnSjyhz_JTg:1483151715327';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d7476044205644946903','//ciudadblogger3.blogspot.pe/2010/12/fuegos-artificiales.html','7476044205644946903');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '7476044205644946903', 'bloggerUrl': 'https://www.blogger.com', 'title': 'Blog de pruebas', 'pageType': 'item', 'postId': '2787072642101004316', 'url': 'http://ciudadblogger3.blogspot.pe/2010/12/fuegos-artificiales.html', 'canonicalUrl': 'https://ciudadblogger3.blogspot.com/2010/12/fuegos-artificiales.html', 'homepageUrl': 'http://ciudadblogger3.blogspot.pe/', 'searchUrl': 'http://ciudadblogger3.blogspot.pe/search', 'canonicalHomepageUrl': 'https://ciudadblogger3.blogspot.com/', 'blogspotFaviconUrl': 'http://ciudadblogger3.blogspot.pe/favicon.ico', 'hasCustomDomain': false, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': '', 'useUniversalAnalytics': false, 'pageName': 'Fuegos artificiales', 'pageTitle': 'Blog de pruebas: Fuegos artificiales', 'encoding': 'UTF-8', 'locale': 'es', 'localeUnderscoreDelimited': 'es', 'isPrivate': true, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'languageDirection': 'ltr', 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Blog de pruebas - Atom\x22 href\x3d\x22https://ciudadblogger3.blogspot.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22Blog de pruebas - RSS\x22 href\x3d\x22https://ciudadblogger3.blogspot.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Blog de pruebas - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/7476044205644946903/posts/default\x22 /\x3e\n\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Blog de pruebas - Atom\x22 href\x3d\x22https://ciudadblogger3.blogspot.com/feeds/2787072642101004316/comments/default\x22 /\x3e\n', 'meTag': '', 'openIdOpTag': '', 'mobileHeadScript': '', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/0d81398a922284ce', 'plusOneApiSrc': 'https://apis.google.com/js/plusone.js', 'sharing': {'platforms': [{'name': 'Obtener enlace', 'key': 'link', 'shareMessage': 'Obtener enlace', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': 'Compartir en Facebook', 'target': 'facebook'}, {'name': 'Escribe un blog', 'key': 'blogThis', 'shareMessage': 'Escribe un blog', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': 'Compartir en Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': 'Compartir en Pinterest', 'target': 'pinterest'}, {'name': 'Google+', 'key': 'googlePlus', 'shareMessage': 'Compartir en Google+', 'target': 'googleplus'}, {'name': 'Correo electrónico', 'key': 'email', 'shareMessage': 'Correo electrónico', 'target': 'email'}], 'googlePlusShareButtonWidth': 300, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27es\x27};\x3c/script\x3e'}}}, {'name': 'features', 'data': {'widgetVisibility': true}}, {'name': 'messages', 'data': {'linkCopiedToClipboard': 'El enlace se ha copiado en el Portapapeles.', 'postLink': 'Enlace de la entrada'}}, {'name': 'template', 'data': {'name': 'custom', 'localizedName': 'Personalizado', 'isResponsive': false, 'isAlternateRendering': false, 'isCustom': true}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': 'Fuegos artificiales', 'description': '', 'url': 'http://ciudadblogger3.blogspot.pe/2010/12/fuegos-artificiales.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': false, 'isPost': true, 'isHomepage': false, 'isArchive': false, 'isSearch': false, 'isLabelSearch': false, 'postId': 2787072642101004316}}]);
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar', null, document.getElementById('Navbar1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', null, document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PageListView', new _WidgetInfo('PageList1', 'crosscol', null, document.getElementById('PageList1'), {'title': 'Páginas', 'links': [{'isCurrentPage': false, 'href': 'http://ciudadblogger3.blogspot.pe/', 'title': 'Página principal'}, {'isCurrentPage': false, 'href': 'http://ciudadblogger3.blogspot.pe/p/pagina-dos.html', 'id': '7737164712441383630', 'title': 'Página UNO'}, {'isCurrentPage': false, 'href': 'http://ciudadblogger3.blogspot.pe/p/pagina-uno.html', 'id': '6204541348754485998', 'title': 'Página DOS'}, {'isCurrentPage': false, 'href': 'http://ciudadblogger3.blogspot.pe/p/pagina-tres.html', 'id': '7134261758463025614', 'title': 'EasyDrag'}], 'mobile': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/3054954425-lbx__es.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/368954415-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Cargando\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebar', null, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'footer', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+</script>
+</body>
+</html>
