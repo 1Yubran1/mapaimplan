@@ -7,7 +7,7 @@ for (var i = 0; i < piezas.length; i++) {
   piezas[i].setAttribute("height", tamHeight[i]);
   piezas[i].setAttribute("x", Math.floor(Math.random() * 100 + 1));
   piezas[i].setAttribute("y", Math.floor(Math.random() * 100 + 1));
-  piezas[i].addEventListener("mousedown", function(evt) {
+  piezas[i].addEventListener("touchstart", function(evt) {
     seleccionarElemento(evt);
   });
 }
@@ -20,36 +20,36 @@ var currentPosY = 0;
 
 function seleccionarElemento(evt) {
   elementSelect = evt.target;
-  currentX = evt.clientX;
-  currentY = evt.clientY;
+  currentX = evt.touches[0].clientX;
+  currentY = evt.touches[0].clientY;
   currentPosX = parseFloat(elementSelect.getAttribute("x"));
   currentPosY = parseFloat(elementSelect.getAttribute("y"));
-  elementSelect.addEventListener("mousemove", function(evt) {
+  elementSelect.addEventListener("touchmove", function(evt) {
     moverElemento(evt);
   });
-  elementSelect.addEventListener("mouseup", function(evt) {
+  elementSelect.addEventListener("touchend", function(evt) {
     deseleccionarElemento(evt);
   });
 }
 
 function moverElemento(evt) {
   if (elementSelect) {
-    var dx = evt.clientX - currentX;
-    var dy = evt.clientY - currentY;
+    var dx = evt.touches[0].clientX - currentX;
+    var dy = evt.touches[0].clientY - currentY;
     currentPosX += dx;
     currentPosY += dy;
     elementSelect.setAttribute("x", currentPosX);
     elementSelect.setAttribute("y", currentPosY);
-    currentX = evt.clientX;
-    currentY = evt.clientY;
+    currentX = evt.touches[0].clientX;
+    currentY = evt.touches[0].clientY;
   }
 }
 
 function deseleccionarElemento(evt) {
   testing();
   if (elementSelect) {
-    elementSelect.removeEventListener("mousemove", moverElemento);
-    elementSelect.removeEventListener("mouseup", deseleccionarElemento);
+    elementSelect.removeEventListener("touchmove", moverElemento);
+    elementSelect.removeEventListener("touchend", deseleccionarElemento);
     elementSelect = null;
   }
 }
