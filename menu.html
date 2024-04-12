@@ -11,8 +11,13 @@
     <h1 class="title"><center>Juego de Rompecabezas</center></h1>
     <div class="puzzle-container">
       <div class="puzzle-image"></div>
-    </div><center>
-        <a href="index.html" class="start-button">Iniciar Juego</a>
+    </div>
+    <center>
+        <form action="index.html" method="GET">
+            <label for="nombre">Ingrese su nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <button type="submit" class="start-button">Iniciar Juego</button>
+          </form>
     </center>
   </div>
 </body>
