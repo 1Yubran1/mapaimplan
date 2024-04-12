@@ -1,3 +1,73 @@
+#body1 {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .title {
+    color: #333;
+  }
+  
+  .puzzle-container {
+    position: relative;
+    margin-top: 20px;
+    width: 400px;
+    height: 300px;
+    border: 2px solid #333;
+    overflow: hidden;
+  }
+  
+  .puzzle-image {
+    width: 100%;
+    height: 100%;
+    background-image: url('agt/mapa.png'); /* Coloca la imagen de tu rompecabezas */
+    background-size: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .start-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .start-button:hover {
+    background-color: #45a049;
+  }
+  
+  .start-button:active {
+    background-color: #3e8e41;
+  }
+  
+  .start-button:focus {
+    outline: none;
+  }
+  
+  /* Animación para cuando se inicia el juego */
+  .start-game {
+    animation: shake 0.5s;
+  }
+  
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+  
 body {
     margin: 0;
     padding: 0;
