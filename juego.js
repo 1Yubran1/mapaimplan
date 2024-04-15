@@ -5,8 +5,6 @@ var tamHeight = [100, 40, 10, 150, 100, 50, 100, 200, 60, 50, 100, 100, 110, 150
 for (var i = 0; i < piezas.length; i++) {
   piezas[i].setAttribute("width", tamWidth[i]);
   piezas[i].setAttribute("height", tamHeight[i]);
-  piezas[i].setAttribute("x", Math.floor(Math.random() * 100 + 1));
-  piezas[i].setAttribute("y", Math.floor(Math.random() * 100 + 1));
   piezas[i].addEventListener("mousedown", function(evt) {
     seleccionarElemento(evt);
   });
