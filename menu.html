@@ -1,41 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juego de Rompecabezas</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="MAPEANDO/LOGO MAPEANDO.png" class="img-fluid" type="image/png">
+  <title>Mapeando ando</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body id="body1">
   <div class="container">
-    <h1 class="title"><center>Juego de Rompecabezas</center></h1>
-    <div class="puzzle-container">
-      <div class="puzzle-image"></div>
+    <br><br><br>
+    <div class="row">
+      <div class="col-sm-6">
+        <center><img src="MAPEANDO/LOGO MAPEANDO.png" class="img-fluid"></center>
+      </div>
     </div>
-    <center>
-        <form action="index.html" method="GET">
-            <label for="nombre">Ingrese su nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            <button type="submit" class="start-button">Iniciar Juego</button>
-        </form>
-    </center>
-    <div class="col" id="divNombre" style="display: none;">
-        <br>
-        <center><h3>Nombre ingresado:</h3></center>
-        <center><p id="nombreMostrado"></p></center>
+    <div class="row">
+      <div class="col-sm-6">
+        <center><img src="MAPEANDO/BIENVENIDO.png" class="img-fluid"></center> 
+       </div>
     </div>
-    <script>
-        function mostrarNombre() {
-            // Obtener el valor del nombre ingresado
-            var nombre = document.getElementById("nombre").value;
-
-            // Mostrar el nombre en el div
-            var divNombre = document.getElementById("divNombre");
-            var nombreMostrado = document.getElementById("nombreMostrado");
-            nombreMostrado.textContent = nombre;
-            divNombre.style.display = "block"; // Mostrar el div
-        }
-    </script>
   </div>
 </body>
 </html>
