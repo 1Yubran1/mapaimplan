@@ -10,7 +10,7 @@ for (var i = 0; i < piezas.length; i++) {
   piezas[i].setAttribute("height", tamHeight[i]);
   piezas[i].setAttribute("x", offsetX);
   piezas[i].setAttribute("y", offsetY);
-  offsetX += tamWidth[i] + 10; // Sumamos el ancho de la imagen más un margen
+  offsetX += tamWidth[i] + 1; // Sumamos el ancho de la imagen más un margen
   piezas[i].addEventListener("mousedown", function(evt) {
     seleccionarElemento(evt);
   });
