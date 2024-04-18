@@ -15,6 +15,7 @@ for (var i = 0; i < piezas.length; i++) {
     seleccionarElemento(evt);
   });
 }
+
 /*
 var piezas = document.getElementsByClassName('movil');
 var tamWidth  = [100, 40, 10, 150, 100, 50, 100, 200, 60, 50, 100, 100, 110, 160, 100, 120, 30, 300, 200, 100, 100, 52];
