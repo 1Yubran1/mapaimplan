@@ -7,7 +7,7 @@ var offsetY = 500; // Offset vertical
 
 for (var i = 0; i < piezas.length; i++) {
   piezas[i].setAttribute("width", tamWidth[i]);
-  piezas[i].setAttribute("height", tamHeight[i]);
+  piezas[i].setAttribute("height",tamHeight[i]);
   piezas[i].setAttribute("x", offsetX);
   piezas[i].setAttribute("y", offsetY);
   offsetX += tamWidth[i] + 1; // Sumamos el ancho de la imagen más un margen
