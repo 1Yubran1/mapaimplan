@@ -137,5 +137,5 @@ function activarConfeti() {
   console.log("Confeti activado");
   // Puedes utilizar una biblioteca de confeti, como por ejemplo 'confetti-js'
   // Por ejemplo:
-  confetti();
+  confeti();
 }
