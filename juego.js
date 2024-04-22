@@ -116,26 +116,3 @@ function testing() {
     confeti[0].play();
   }
 }
-
-// Espera a que el documento esté completamente cargado
-document.addEventListener("DOMContentLoaded", function() {
-  // Obtén el botón por su ID
-  var btnTerminar = document.getElementById("btnTerminar");
-
-  // Agrega un evento de clic al botón
-  btnTerminar.addEventListener("click", function() {
-      // Ejecuta alguna función o acción cuando se haga clic en el botón
-      console.log("Botón 'Terminar' clicado");
-      // Aquí puedes llamar a la función que desees ejecutar al hacer clic en el botón
-      // Por ejemplo:
-      terminarJuego(); // Esto es un ejemplo, deberías definir la función `terminarJuego()` con la lógica que desees
-    });
-});
-
-function activarConfeti() {
-  // Aquí va la lógica para activar el confeti
-  console.log("Confeti activado");
-  // Puedes utilizar una biblioteca de confeti, como por ejemplo 'confetti-js'
-  // Por ejemplo:
-  confeti();
-}
